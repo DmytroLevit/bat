@@ -403,13 +403,13 @@ void BCAux::DrawKnowledgeUpdate(BCHistogramBase& prior, BCHistogramBase& posteri
 
     // Draw prior legend on top left
     // Draw posterior legend on top right
-#if ROOTVERSION >= 6000000
-    prior.GetLegend().SetX2(prior.GetLegend().GetX1() + 45e-2 * (prior.GetLegend().GetX2() - prior.GetLegend().GetX1()));
-    posterior.GetLegend().SetX1(posterior.GetLegend().GetX1() + 55e-2 * (posterior.GetLegend().GetX2() - posterior.GetLegend().GetX1()));
-#else
-    prior.GetLegend().SetX2NDC(prior.GetLegend().GetX1NDC() + 45e-2 * (prior.GetLegend().GetX2NDC() - prior.GetLegend().GetX1NDC()));
-    posterior.GetLegend().SetX1NDC(posterior.GetLegend().GetX1NDC() + 55e-2 * (posterior.GetLegend().GetX2NDC() - posterior.GetLegend().GetX1NDC()));
-#endif
+    if(gROOT->GetVersionInt() >= 60000) {
+        prior.GetLegend().SetX2(prior.GetLegend().GetX1() + 45e-2 * (prior.GetLegend().GetX2() - prior.GetLegend().GetX1()));
+        posterior.GetLegend().SetX1(posterior.GetLegend().GetX1() + 55e-2 * (posterior.GetLegend().GetX2() - posterior.GetLegend().GetX1()));
+    } else {
+        prior.GetLegend().SetX2NDC(prior.GetLegend().GetX1NDC() + 45e-2 * (prior.GetLegend().GetX2NDC() - prior.GetLegend().GetX1NDC()));
+        posterior.GetLegend().SetX1NDC(posterior.GetLegend().GetX1NDC() + 55e-2 * (posterior.GetLegend().GetX2NDC() - posterior.GetLegend().GetX1NDC()));
+    }
 
     prior.GetLegend().Draw();
     posterior.GetLegend().Draw();
